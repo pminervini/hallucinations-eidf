@@ -26,7 +26,8 @@ def main():
             "apt-get install git-lfs && " \
             "git lfs install && " \
             "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
-            "cd leaderboard && pip -U -r requirements.txt && HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN "
+            "cd leaderboard && pip -U -r requirements.txt && pip install -U protobuf && " \
+            "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN "
     command = "python backend-cli.py"
 
     secret_env_vars = configs["env_vars"]
