@@ -22,7 +22,7 @@ def main():
     args = argument_parser()
     configs = yaml.safe_load(open(args.config, "r"))
 
-    base_args = "apt -y update && " \
+    base_args = "apt -y update && apt -y upgrade && " \
             "apt-get -y install git-lfs python3-pip && " \
             "git lfs install && " \
             "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
