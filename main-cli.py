@@ -23,7 +23,7 @@ def main():
     configs = yaml.safe_load(open(args.config, "r"))
 
     base_args = "apt -y update && " \
-            "apt-get -y install git-lfs && " \
+            "apt-get -y install git-lfs python3-pip && " \
             "git lfs install && " \
             "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
             "cd leaderboard && pip -U -r requirements.txt && pip install -U protobuf && " \
