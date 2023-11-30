@@ -13,7 +13,7 @@ from kubejobs.jobs import KubernetesJob
 
 def argument_parser():
     parser = argparse.ArgumentParser(description="Backend Runner")
-    parser.add_argument("config", type=str, required=True)
+    parser.add_argument("config", type=str)
     args = parser.parse_args()
     return args
 
