@@ -1,1 +1,2 @@
+kubernetes
 git+https://github.com/AntreasAntoniou/kubejobs.git

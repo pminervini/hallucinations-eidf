@@ -8,6 +8,8 @@ import sys
 sys.path.append(os.getcwd())
 
 import yaml
+
+from kubernetes import client, config
 from kubejobs.jobs import KubernetesJob
 
 
@@ -18,9 +20,53 @@ def argument_parser():
     return args
 
 
+def delete_if_completed(job_name: str, namespace: str = 'informatics') -> bool:
+    # Load the kube config
+    config.load_kube_config()
+
+    # Create an instance of the API class
+    api = client.BatchV1Api()
+
+    job_exists = False
+    res = True
+
+    # Get the list of jobs in the specified namespace
+    jobs = api.list_namespaced_job(namespace)
+
+    # Check if the job exists in the list
+    for job in jobs.items:
+        if job.metadata.name == job_name:
+            job_exists = True
+
+    if job_exists is True:
+        job = api.read_namespaced_job(job_name, namespace)
+
+        res = False
+        is_completed = False
+
+        # Check the status conditions
+        if job.status.conditions:
+            for condition in job.status.conditions:
+                if condition.type == 'Complete' and condition.status == 'True':
+                    is_completed = True
+                elif condition.type == 'Failed' and condition.status == 'True':
+                    print(f"Job {job_name} has failed.")
+        else:
+            print(f"Job {job_name} still running or status is unknown.")
+        
+        if is_completed:
+            api_res = api.delete_namespaced_job(name=job_name, namespace=namespace,
+                                                body=client.V1DeleteOptions(propagation_policy='Foreground'))
+            res = True
+        print(f"Job '{job_name}' deleted. Status: {api_res.status}")
+    return res
+
 def main():
     args = argument_parser()
     configs = yaml.safe_load(open(args.config, "r"))
+
+    job_name = 'hl-backend'
+    delete_if_completed(job_name)
 
     base_args = "apt -y update && apt -y upgrade && " \
             "apt-get -y install git-lfs unzip psmisc wget git python3 python-is-python3 pip bc htop nano && " \
