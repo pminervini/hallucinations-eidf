@@ -39,7 +39,7 @@ def main():
                         gpu_type="nvidia.com/gpu",
                         gpu_limit=configs["gpu_limit"],
                         gpu_product=configs["gpu_product"],
-                        backoff_limit=4,
+                        backoff_limit=1,
                         command=["/bin/bash", "-c", "--"],
                         args=[base_args + command],
                         secret_env_vars=secret_env_vars,
