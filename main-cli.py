@@ -26,7 +26,7 @@ def main():
             "apt-get -y install git-lfs python3-pip && " \
             "git lfs install && " \
             "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
-            "cd leaderboard && pip -U -r requirements.txt && pip install -U protobuf && " \
+            "cd leaderboard && pip install -U -r requirements.txt && pip install -U protobuf && " \
             "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN "
     command = "python backend-cli.py"
 
