@@ -34,7 +34,7 @@ def main():
     # Create a Kubernetes Job with a name, container image, and command
     print(f"Creating job for: {command}")
     job = KubernetesJob(name="hl-backend",
-                        image=configs["image"],
+                        image="nvcr.io/nvidia/cuda:12.0.0-cudnn8-devel-ubuntu22.04",
                         gpu_type="nvidia.com/gpu",
                         gpu_limit=configs["gpu_limit"],
                         gpu_product=configs["gpu_product"],
