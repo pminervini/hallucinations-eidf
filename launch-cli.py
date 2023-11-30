@@ -19,9 +19,6 @@ def argument_parser():
     args = parser.parse_args()
     return args
 
-
-
-
 def main():
     args = argument_parser()
     configs = yaml.safe_load(open(args.config, "r"))
