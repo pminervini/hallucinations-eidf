@@ -20,7 +20,7 @@ def argument_parser():
     return args
 
 
-def delete_if_completed(job_name: str, namespace: str = 'informatics') -> bool:
+def check_if_completed(job_name: str, namespace: str = 'informatics') -> bool:
     # Load the kube config
     config.load_kube_config()
 
@@ -28,20 +28,15 @@ def delete_if_completed(job_name: str, namespace: str = 'informatics') -> bool:
     api = client.BatchV1Api()
 
     job_exists = False
-    res = True
+    is_completed = True
 
-    # Get the list of jobs in the specified namespace
+    # Check if the job exists in the specified namespace
     jobs = api.list_namespaced_job(namespace)
-
-    # Check if the job exists in the list
-    for job in jobs.items:
-        if job.metadata.name == job_name:
-            job_exists = True
+    if job_name in {job.metadata.name for job in jobs.items}:
+        job_exists = True
 
     if job_exists is True:
         job = api.read_namespaced_job(job_name, namespace)
-
-        res = False
         is_completed = False
 
         # Check the status conditions
@@ -57,18 +52,17 @@ def delete_if_completed(job_name: str, namespace: str = 'informatics') -> bool:
         if is_completed:
             api_res = api.delete_namespaced_job(name=job_name, namespace=namespace,
                                                 body=client.V1DeleteOptions(propagation_policy='Foreground'))
-            res = True
             print(f"Job '{job_name}' deleted. Status: {api_res.status}")
-    return res
+    return is_completed
 
 def main():
     args = argument_parser()
     configs = yaml.safe_load(open(args.config, "r"))
 
     job_name = 'hl-backend'
-    not_running = delete_if_completed(job_name)
+    is_completed = check_if_completed(job_name)
 
-    if not_running is True:
+    if is_completed is True:
         base_args = "apt -y update && apt -y upgrade && " \
                 "apt-get -y install git-lfs unzip psmisc wget git python3 python-is-python3 pip bc htop nano && " \
                 "git lfs install && " \
