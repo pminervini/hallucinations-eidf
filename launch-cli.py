@@ -16,14 +16,16 @@ from kubejobs.jobs import KubernetesJob
 def argument_parser():
     parser = argparse.ArgumentParser(description="Backend Runner")
     parser.add_argument("config", type=str)
+    parser.add_argument("--job-name", "-n", type=str, default="hl-backend")
     args = parser.parse_args()
     return args
+
 
 def main():
     args = argument_parser()
     configs = yaml.safe_load(open(args.config, "r"))
 
-    job_name = 'hl-backend'
+    job_name = args.job_name
     is_completed = utils.check_if_completed(job_name)
 
     if is_completed is True:
