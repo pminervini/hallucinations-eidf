@@ -1,5 +1,5 @@
-gpu_limit: 1
-gpu_product: NVIDIA-A100-SXM4-80GB
+gpu_limit: 2
+gpu_product: NVIDIA-A100-SXM4-40GB
 env_vars:
   HF_TOKEN:
     secret_name: hl-secrets
