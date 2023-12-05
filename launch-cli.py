@@ -33,8 +33,11 @@ def main():
         base_args = "apt -y update && apt -y upgrade && " \
                 "apt-get -y install git-lfs unzip psmisc wget git python3 python-is-python3 pip bc htop nano && " \
                 "git lfs install && " \
+                "pip install -U pip && " \
                 "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
-                "cd leaderboard && pip install -U -r requirements.txt && pip install -U protobuf && " \
+                "cd leaderboard && " \
+                "pip install --root-user-action=ignore -U -r requirements.txt && " \
+                "pip install --root-user-action=ignore -U protobuf && " \
                 "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN "
         command = "python backend-cli.py"
 
