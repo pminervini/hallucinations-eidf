@@ -18,6 +18,7 @@ def argument_parser():
     parser.add_argument("config", type=str)
     parser.add_argument("--job-name", "-n", type=str, default="hl-backend")
     parser.add_argument("--gpu-type", type=str, default=None)
+    parser.add_argument("--gpu-limit", type=int, default=None)
     args = parser.parse_args()
     return args
 
@@ -48,7 +49,7 @@ def main():
         job = KubernetesJob(name=job_name,
                             image="nvcr.io/nvidia/cuda:12.0.0-cudnn8-devel-ubuntu22.04",
                             gpu_type="nvidia.com/gpu",
-                            gpu_limit=configs["gpu_limit"],
+                            gpu_limit=configs["gpu_limit"] if args.gpu_limit is None else args.gpu_limit,
                             gpu_product=configs["gpu_product"] if args.gpu_type is None else args.gpu_type,
                             backoff_limit=1,
                             command=["/bin/bash", "-c", "--"],
