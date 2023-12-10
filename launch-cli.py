@@ -39,7 +39,7 @@ def main():
                 "cd leaderboard && " \
                 "pip install --root-user-action=ignore -U -r requirements.txt && " \
                 "pip install --root-user-action=ignore -U protobuf && " \
-                "pip install --root-user-action=ignore -U auto-gptq && " \
+                "pip install --root-user-action=ignore -U auto-gptq optimum && " \
                 "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN CURL_CA_BUNDLE=\"\" "
         command = "python backend-cli.py"
 
