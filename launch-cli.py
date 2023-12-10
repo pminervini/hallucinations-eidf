@@ -40,7 +40,7 @@ def main():
                 "pip install --root-user-action=ignore -U -r requirements.txt && " \
                 "pip install --root-user-action=ignore -U protobuf && " \
                 "pip install --root-user-action=ignore -U auto-gptq && " \
-                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN "
+                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN CURL_CA_BUNDLE=\"\" "
         command = "python backend-cli.py"
 
         secret_env_vars = configs["env_vars"]
