@@ -19,6 +19,7 @@ def argument_parser():
     parser.add_argument("--job-name", "-n", type=str, default="hl-backend")
     parser.add_argument("--gpu-type", type=str, default=None)
     parser.add_argument("--gpu-limit", type=int, default=None)
+    parser.add_argument("--namespace", type=str, default="informatics")
     args = parser.parse_args()
     return args
 
@@ -28,7 +29,7 @@ def main():
     configs = yaml.safe_load(open(args.config, "r"))
 
     job_name = args.job_name
-    is_completed = utils.check_if_completed(job_name)
+    is_completed = utils.check_if_completed(job_name, namespace=args.namespace)
 
     if is_completed is True:
         base_args = "apt -y update && apt -y upgrade && " \
@@ -40,6 +41,7 @@ def main():
                 "pip install --root-user-action=ignore -U -r requirements.txt && " \
                 "pip install --root-user-action=ignore -U protobuf && " \
                 "pip install --root-user-action=ignore -U auto-gptq optimum autoawq && " \
+                "python -m spacy download en_core_web_sm && " \
                 "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python HF_TOKEN=$HF_TOKEN H4_TOKEN=$HF_TOKEN " \
                 "HF_HUB_DISABLE_PROGRESS_BARS=1 CURL_CA_BUNDLE=\"\" "
         command = "python backend-cli.py"
