@@ -36,6 +36,7 @@ def main():
                 "apt-get -y install git-lfs unzip psmisc wget git python3 python-is-python3 pip bc htop nano && " \
                 "git lfs install && " \
                 "pip install --root-user-action=ignore -U pip && " \
+                "sleep $((RANDOM % 300 + 300)) && " \
                 "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
                 "cd leaderboard && " \
                 "pip install --root-user-action=ignore -U -r requirements.txt && " \
