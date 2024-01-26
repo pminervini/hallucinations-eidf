@@ -32,11 +32,11 @@ def main():
     is_completed = utils.check_if_completed(job_name, namespace=args.namespace)
 
     if is_completed is True:
+        # "sleep $((RANDOM % 300 + 300)) && " \
         base_args = "apt -y update && apt -y upgrade && " \
                 "apt-get -y install git-lfs unzip psmisc wget git python3 python-is-python3 pip bc htop nano && " \
                 "git lfs install && " \
                 "pip install --root-user-action=ignore -U pip && " \
-                "sleep $((RANDOM % 300 + 300)) && " \
                 "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
                 "cd leaderboard && " \
                 "pip install --root-user-action=ignore -U -r requirements.txt && " \
