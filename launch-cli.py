@@ -36,7 +36,7 @@ def main():
         base_args = "apt -y update && apt -y upgrade && " \
                 "apt-get -y install git-lfs unzip psmisc wget git python3 python-is-python3 pip bc htop nano && " \
                 "git lfs install && " \
-                "pip install --root-user-action=ignore -U pip && " \
+                "pip install -U pip && " \
                 "git clone https://huggingface.co/spaces/hallucinations-leaderboard/leaderboard && " \
                 "cd leaderboard && " \
                 "pip install --root-user-action=ignore -U -r requirements.txt && " \
