@@ -62,7 +62,7 @@ def main():
                             secret_env_vars=secret_env_vars,
                             user_email="p.minervini@ed.ac.uk",
                             namespace=args.namespace,
-                            kubernetes_queue_name=f"{args.namespace}-user-queue" )
+                            kueue_queue_name=f"{args.namespace}-user-queue")
 
         # Run the Job on the Kubernetes cluster
         job.run()
